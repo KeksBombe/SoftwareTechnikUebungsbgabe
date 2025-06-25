@@ -26,7 +26,6 @@ def add_movie():
     data = request.get_json()
     if not data or 'name' not in data:
         return jsonify({'error': 'Filmname fehlt'}), 400
-    
     new_movie = Movie(name=data['name'])
     try:
         db.session.add(new_movie)
