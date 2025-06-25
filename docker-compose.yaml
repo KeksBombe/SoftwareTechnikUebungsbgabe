@@ -1,0 +1,39 @@
+services:
+  movie-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=app.py
+    volumes:
+      - ./movie_data:/app/data
+    restart: unless-stopped
+    container_name: movie-api
+    networks:
+      - movie-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 5s
+
+  test:
+    image: test-engine:v2
+    environment:
+      SWSYSPRO_TEST_ENGINE_HOST: http://movie-api:8080/
+    depends_on:
+      movie-api:
+        condition: service_healthy
+    networks:
+      - movie-network
+
+volumes:
+  movie_data:
+
+networks:
+  movie-network:
+    driver: bridge
