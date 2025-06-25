@@ -59,10 +59,3 @@ def delete_movie_by_id(movie_id):
             return jsonify({'error': 'Film konnte nicht gelöscht werden'}), 500
     else:
         return jsonify({'error': 'Film nicht gefunden'}), 404
-@app.route('/healthcheck', methods=['GET'])
-def healthcheck():
-    return jsonify({'status': 'healthy'}), 200
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(host='0.0.0.0', port=8080, debug=True)
