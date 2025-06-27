@@ -1,5 +1,5 @@
 services:
-  movie-api:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
@@ -14,22 +14,13 @@ services:
     container_name: movie-api
     networks:
       - movie-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
-      interval: 5s
-      timeout: 30s
-      retries: 5
-      start_period: 5s
 
   test:
-    image: test-engine:v2
+    image: swsyspro-test-engine:2025-v2
     environment:
-      SWSYSPRO_TEST_ENGINE_HOST: http://movie-api:8080/
+      SWSYSPRO_TEST_ENGINE_HOST: http://web:8080
     depends_on:
-      movie-api:
-        condition: service_healthy
-    networks:
-      - movie-network
+      - web
 
 volumes:
   movie_data:
