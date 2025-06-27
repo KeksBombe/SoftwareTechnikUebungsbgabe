@@ -11,7 +11,7 @@ services:
     volumes:
       - ./movie_data:/app/data
     restart: unless-stopped
-    container_name: movie-api
+    container_name: web
     networks:
       - movie-network
 
@@ -20,7 +20,7 @@ services:
     environment:
       SWSYSPRO_TEST_ENGINE_HOST: http://web:8080
     depends_on:
-      - movie-api
+      - web
     networks:
       - movie-network
 
