@@ -20,7 +20,9 @@ services:
     environment:
       SWSYSPRO_TEST_ENGINE_HOST: http://web:8080
     depends_on:
-      - web
+      - movie-api
+    networks:
+      - movie-network
 
 volumes:
   movie_data:
