@@ -30,7 +30,7 @@ def add_movie():
     try:
         db.session.add(new_movie)
         db.session.commit()
-        return jsonify(new_movie.to_dict()), 201
+        return jsonify(new_movie.id), 201
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': 'Film konnte nicht hinzugefügt werden'}), 500 
@@ -38,8 +38,7 @@ def add_movie():
 def get_movie_by_id(movie_id):
     movie = Movie.query.filter_by(id=movie_id).first()
     if movie:
-        print(f"Film gefunden: {movie.name}, ID: {movie.id}")
-        return movie.id, 200
+        return jsonify(movie.to_dict()), 200
     else:
         return jsonify({'error': 'Film nicht gefunden'}), 404
 @app.route('/movies/name/<movie_name>', methods=['GET'])
@@ -62,4 +61,4 @@ def delete_movie_by_id(movie_id):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
