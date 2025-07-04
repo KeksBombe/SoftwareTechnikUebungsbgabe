@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "8080:8080"
     environment:
       - FLASK_ENV=production
       - FLASK_APP=app.py
@@ -16,9 +16,9 @@ services:
       - movie-network
 
   test:
-    image: swsyspro-mue-test-engine:2025-2.2-alpha-1
+    image: swsyspro-mue-test-engine:2025-2.2-alpha-2
     environment:
-      SWSYSPRO_TEST_ENGINE_HOST: http://web:5000
+      SWSYSPRO_TEST_ENGINE_HOST: http://web:8080
     depends_on:
       - web
     networks:
