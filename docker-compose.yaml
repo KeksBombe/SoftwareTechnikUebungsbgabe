@@ -16,7 +16,7 @@ services:
       - movie-network
 
   test:
-    image: swsyspro-test-engine:2025-v2
+    image: swsyspro-test-engine:2025-v2.1
     environment:
       SWSYSPRO_TEST_ENGINE_HOST: http://web:8080
     depends_on:

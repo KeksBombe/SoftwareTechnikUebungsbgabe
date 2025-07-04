@@ -38,7 +38,8 @@ def add_movie():
 def get_movie_by_id(movie_id):
     movie = Movie.query.filter_by(id=movie_id).first()
     if movie:
-        return jsonify(movie.to_dict()), 200
+        print(f"Film gefunden: {movie.name}, ID: {movie.id}")
+        return movie.id, 200
     else:
         return jsonify({'error': 'Film nicht gefunden'}), 404
 @app.route('/movies/name/<movie_name>', methods=['GET'])
@@ -58,3 +59,7 @@ def delete_movie_by_id(movie_id):
             return jsonify({'error': 'Film konnte nicht gelöscht werden'}), 500
     else:
         return jsonify({'error': 'Film nicht gefunden'}), 404
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(host='0.0.0.0', port=8080, debug=True)
