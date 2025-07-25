@@ -13,10 +13,7 @@ class Movie(db.Model):
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name = db.Column(db.String(100), nullable=False)
     def to_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name
-        }
+        return {'id': self.id,'name': self.name}
 @app.route('/movies', methods=['GET'])
 def get_all_movies():
     movies = Movie.query.all()
@@ -61,4 +58,4 @@ def delete_movie_by_id(movie_id):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
